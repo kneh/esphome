@@ -359,18 +359,21 @@ void ILI9XXXDetect::initialize() {
   ESP_LOGI(TAG, "   Manufacturer Id: %d",(lcd_id>>16) & 0xFF);
   ESP_LOGI(TAG, "   Driver Id: %d,%d", (lcd_id>>8) & 0xFF, lcd_id & 0xFF);
   switch (lcd_id & 0xFF0000) {
+    default:
     case ILI_LCD_ID(93,41):
       this->init_lcd_(INITCMD_ILI9341);
       if (this->width_ == 0)
         this->width_ = 240;
       if (this->height_ == 0)
         this->height_ = 320;
+      break;
     case ILI_LCD_ID(93,42):
       this->init_lcd_(INITCMD_ILI9341);
       if (this->width_ == 0)
         this->width_ = 320;
       if (this->height_ == 0)
         this->height_ = 240;
+      break;
   }
 }
 
