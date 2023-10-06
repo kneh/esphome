@@ -366,9 +366,30 @@ void ILI9XXXILI9341::initialize() {
   if (this->height_ == 0)
     this->height_ = 320;
 }
+
+//   24_TFT_RGB display
+void ILI9XXXILI9341RGB::initialize() {
+  this->init_lcd_(INITCMD_ILI9341_RGB);
+  if (this->width_ == 0)
+    this->width_ = 240;
+  if (this->height_ == 0)
+    this->height_ = 320;
+}
+
 //   24_TFT rotated display
 void ILI9XXXILI9342::initialize() {
   this->init_lcd_(INITCMD_ILI9341);
+  if (this->width_ == 0) {
+    this->width_ = 320;
+  }
+  if (this->height_ == 0) {
+    this->height_ = 240;
+  }
+}
+
+//   24_TFT rotated RGB display
+void ILI9XXXILI9342RGB::initialize() {
+  this->init_lcd_(INITCMD_ILI9341_RGB);
   if (this->width_ == 0) {
     this->width_ = 320;
   }
