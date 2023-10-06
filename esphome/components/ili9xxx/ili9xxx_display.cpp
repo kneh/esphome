@@ -355,7 +355,8 @@ int ILI9XXXDisplay::get_height_internal() { return this->height_; }
 //   Default display
 void ILI9XXXDetect::initialize() {
   uint32_t lcd_id=this->id_lcd_();
-  ESP_LOGV(TAG, "ILI9XXX LCD_ID: MFT:%d DRV_V:%d DRV_ID%d",(lcd_id>>16) & 0xFF,(lcd_id>>8) & 0xFF, lcd_id & 0xFF);
+  ESP_LOGD(TAG, "Manufacturer Id: %d",(lcd_id>>16) & 0xFF);
+  ESP_LOGD(TAG, "Driver Id: %d,%d", (lcd_id>>8) & 0xFF, lcd_id & 0xFF);
   switch (lcd_id & 0xFF0000) {
     case ILI_LCD_ID(93,41):
       this->init_lcd_(INITCMD_ILI9341);
