@@ -320,9 +320,10 @@ uint32_t ILI9XXXDisplay::id_lcd_() {
   this->command(ILI9XXX_RDDID);
   this->start_data_();
   this->read_byte(); // ignore this MSB
-  for (x=0; x<4; x++)
+  for (x=0; x<3; x++) {
     id |= this->read_byte();
     id <<=8;
+    }
   this->end_data_();
   return id;
 }
