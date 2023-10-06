@@ -45,6 +45,7 @@ void ILI9XXXDisplay::setup_pins_() {
 
 void ILI9XXXDisplay::dump_config() {
   LOG_DISPLAY("", "ili9xxx", this);
+  ESP_LOGCONFIG(TAG, "  ID: 0x%08lx",this->_id_lcd());
   switch (this->buffer_color_mode_) {
     case BITS_8_INDEXED:
       ESP_LOGCONFIG(TAG, "  Color mode: 8bit Indexed");
