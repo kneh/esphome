@@ -50,6 +50,7 @@ MODELS = {
     "ST7796": ili9XXX_ns.class_("ILI9XXXST7796", ili9XXXSPI),
     "S3BOX": ili9XXX_ns.class_("ILI9XXXS3Box", ili9XXXSPI),
     "S3BOX_LITE": ili9XXX_ns.class_("ILI9XXXS3BoxLite", ili9XXXSPI),
+    "Detect": ili9XXX_ns.class_("ILI9XXXDetect", ili9XXXSPI),
 }
 
 COLOR_PALETTE = cv.one_of("NONE", "GRAYSCALE", "IMAGE_ADAPTIVE")

@@ -54,6 +54,7 @@ class ILI9XXXDisplay : public PollingComponent,
 
   void display_();
   void init_lcd_(const uint8_t *init_cmd);
+  uint32_t id_lcd_(void);
   void set_addr_window_(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
   void invert_display_(bool invert);
   void reset_();
@@ -89,6 +90,13 @@ class ILI9XXXDisplay : public PollingComponent,
   bool need_update_ = false;
   bool is_18bitdisplay_ = false;
 };
+
+//-----------   Detect display --------------
+class ILI9XXXDetect : public ILI9XXXDisplay {
+ protected:
+  void initialize() override;
+};
+
 
 //-----------   M5Stack display --------------
 class ILI9XXXM5Stack : public ILI9XXXDisplay {

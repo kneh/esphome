@@ -314,6 +314,19 @@ void ILI9XXXDisplay::init_lcd_(const uint8_t *init_cmd) {
   }
 }
 
+uint32_t ILI9XXXDisplay::id_lcd_() {
+  uint8_t x;
+  uint32_t id = 0;
+  this->command(ILI9XXX_RDDID);
+  this->start_data_();
+  this->read_byte(); // ignore this MSB
+  for (x=0; x<4; x++)
+    id |= this->read_byte();
+    id <<=8;
+  this->end_data_();
+  return id;
+}
+
 void ILI9XXXDisplay::set_addr_window_(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h) {
   uint16_t x2 = (x1 + w - 1), y2 = (y1 + h - 1);
   this->command(ILI9XXX_CASET);  // Column address set
@@ -337,6 +350,27 @@ void ILI9XXXDisplay::invert_display_(bool invert) { this->command(invert ? ILI9X
 
 int ILI9XXXDisplay::get_width_internal() { return this->width_; }
 int ILI9XXXDisplay::get_height_internal() { return this->height_; }
+
+#define ILI_LCD_ID(driver,version) ((driver<<8) | version)
+//   Default display
+void ILI9XXXDetect::initialize() {
+  uint32_t lcd_id=this->id_lcd_();
+  ESP_LOGV(TAG, "ILI9XXX LCD_ID: MFT:%d DRV_V:%d DRV_ID%d",(lcd_id>>16) & 0xFF,(lcd_id>>8) & 0xFF, lcd_id & 0xFF);
+  switch (lcd_id & 0xFF0000) {
+    case ILI_LCD_ID(93,41):
+      this->init_lcd_(INITCMD_ILI9341);
+      if (this->width_ == 0)
+        this->width_ = 240;
+      if (this->height_ == 0)
+        this->height_ = 320;
+    case ILI_LCD_ID(93,42):
+      this->init_lcd_(INITCMD_ILI9341);
+      if (this->width_ == 0)
+        this->width_ = 320;
+      if (this->height_ == 0)
+        this->height_ = 240;
+  }
+}
 
 //   M5Stack display
 void ILI9XXXM5Stack::initialize() {
